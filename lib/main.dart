@@ -11,8 +11,19 @@ class ByteBankApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkTheme = ThemeData.dark().copyWith(
+      accentColor: Colors.orange[800],
+      buttonTheme: ButtonThemeData(
+        buttonColor: Colors.orange[800],
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: Colors.orange[800],
+      ),
+    );
+
     return MaterialApp(
       home: ListaTransferencia(),
+      theme: darkTheme,
     );
   }
 }
@@ -24,24 +35,26 @@ class FormularioTransferencia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Editor(
-            ctrl: _ctrlCampoNroConta,
-            lblCampo: 'Número da Conta',
-            hintCampo: '0000',
-          ),
-          Editor(
-            ctrl: _ctrlCampoValor,
-            lblCampo: 'Valor',
-            hintCampo: '0.00',
-            icone: Icons.monetization_on,
-          ),
-          RaisedButton(
-            child: Text('Confirmar'),
-            onPressed: () => _criarTransferencia(context),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Editor(
+              ctrl: _ctrlCampoNroConta,
+              lblCampo: 'Número da Conta',
+              hintCampo: '0000',
+            ),
+            Editor(
+              ctrl: _ctrlCampoValor,
+              lblCampo: 'Valor',
+              hintCampo: '0.00',
+              icone: Icons.monetization_on,
+            ),
+            RaisedButton(
+              child: Text('Confirmar'),
+              onPressed: () => _criarTransferencia(context),
+            ),
+          ],
+        ),
       ),
       appBar: AppBar(title: Text('Criando transferência')),
     );
@@ -112,8 +125,12 @@ class ListaTransferenciaState extends State<ListaTransferencia> {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return FormularioTransferencia();
           })).then((transferencia) {
-            widget._transferencias.add(transferencia);
-            setState(() {});
+            if (transferencia == null) {
+              return;
+            }
+            setState(() {
+              widget._transferencias.add(transferencia);
+            });
           });
         },
       ),

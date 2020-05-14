@@ -1,7 +1,15 @@
-# flutter_fundamentals
+# Flutter Fundamentals
+## A learning project
 
-First concepts:  
+Concepts:
 - StatelessWidget;
 - StatefulWidget;
 - MaterialRoute;
 - Refactoring;
+- Theming;
+
+Developed and testes at *Flutter 1.17*
+
+```
+flutter run
+```
